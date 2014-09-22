@@ -26,7 +26,7 @@ server.route({
     if (request.payload.mailinMsg) {
       var json = request.payload.mailinMsg;
       console.log(typeof json);
-      console.log(json.to);
+      console.log(json);
       var message = new Message(json);
 
       message.saveAll()
@@ -39,6 +39,11 @@ server.route({
     }
 
     reply();
+  },
+  config: {
+    payload: {
+      parse: true
+    }
   }
 });
 
