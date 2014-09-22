@@ -11,13 +11,14 @@ server.route({
 });
 
 
-server.route.post({
+server.route({
   method: 'POST',
   path: '/',
   handler: function(request, reply) {
-    console.log(request.payload)
+    console.log(request.payload);
+    reply();
   }
-})
+});
 
 server.pack.register({
   plugin: good
