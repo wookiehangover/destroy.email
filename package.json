@@ -1,0 +1,10 @@
+{
+  "name": "destroy.email",
+  "version": "0.0.1",
+  "dependencies": {
+    "good": "^2.3.0",
+    "hapi": "^6.8.1",
+    "mailin": "^1.0.0",
+    "thinky": "^1.14.4"
+  }
+}
