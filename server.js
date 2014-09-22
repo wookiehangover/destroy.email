@@ -8,7 +8,14 @@ server.route({
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
-    reply('Hello World');
+    reply({
+      name: 'destroy.email',
+      description: 'An API for your inbox',
+      beta: {
+        status: 'coming soon',
+        signup: 'curl -d you@example.com https://destroy.email/beta'
+      }
+    });
   }
 });
 
@@ -25,6 +32,15 @@ server.route({
         });
     }
 
+    reply();
+  }
+});
+
+server.route({
+  method: 'POST',
+  path: '/beta',
+  handler: function(request, reply) {
+    // TODO - wire up to mailchimp API
     reply();
   }
 });
