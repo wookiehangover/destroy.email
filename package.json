@@ -2,9 +2,11 @@
   "name": "destroy.email",
   "version": "0.0.1",
   "dependencies": {
+    "bluebird": "^2.3.2",
     "config": "^1.2.0",
     "good": "^2.3.0",
     "hapi": "^6.8.1",
+    "lodash": "^2.4.1",
     "thinky": "^1.14.4"
   }
 }
