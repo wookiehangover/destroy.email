@@ -19,22 +19,37 @@ server.route({
   }
 });
 
+var parse = function(data) {
+  var json = {};
+  try {
+    json = JSON.parse(data);
+  } catch(parseError) {
+    console.error(parseError);
+    console.error(parseError.stack);
+  }
+  return json;
+};
+
 server.route({
   method: 'POST',
   path: '/',
   handler: function(request, reply) {
     if (request.payload.mailinMsg) {
       var json = request.payload.mailinMsg;
-      console.log(typeof json);
-      console.log(json);
+      if (typeof json === 'string') {
+        json = parse(json);
+      }
       var message = new Message(json);
 
-      message.saveAll()
+      return message.saveAll()
         .then(function() {
           console.log('Message saved');
         })
         .catch(function(err) {
           console.error(err);
+        })
+        .finally(function() {
+          reply('Message saved');
         });
     }
 
