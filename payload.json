@@ -1,0 +1,70 @@
+{
+  "mailinMsg": {
+    "html": "<div dir=\"ltr\"><br clear=\"all\"><div><span style=\"font-family:Helvetica\"><div>_____</div><div><br></div><div>Sam Breed</div><div><div><font color=\"#666666\">CTO</font></div><div><font color=\"#666666\"><br></font></div><div><font color=\"#666666\">Quick Left</font></div><div><font color=\"#666666\">902 Pearl Street</font></div><div><font color=\"#666666\">Boulder, CO 80302</font></div></div><div><font color=\"#666666\">303.242.5536</font></div><div><font color=\"#666666\"><br></font></div><div><div><a href=\"http://www.quickleft.com/blog\" target=\"_blank\"><font color=\"#666666\">http://www.quickleft.com/blog</font></a></div><div><a href=\"http://twitter.com/quickleft\" target=\"_blank\"><font color=\"#666666\">http://twitter.com/quickleft</font></a></div></div></span></div>\n</div>\n",
+    "text": "_____\n\nSam Breed\nCTO\n\nQuick Left\n902 Pearl Street\nBoulder, CO 80302\n303.242.5536\n\nhttp://www.quickleft.com/blog\nhttp://twitter.com/quickleft\n",
+    "headers": {
+      "received": [
+        "by mail-ig0-f177.google.com with SMTP id h3so1938070igd.10 for <hello@destroy.email>; Sun, 21 Sep 2014 19:27:23 -0700 (PDT)",
+        "by 10.42.215.207 with HTTP; Sun, 21 Sep 2014 19:27:02 -0700 (PDT)"
+      ],
+      "dkim-signature": "v=1; a=rsa-sha256; c=relaxed/relaxed; d=quickleft.com; s=google; h=mime-version:from:date:message-id:subject:to:content-type; bh=fkbdtKo0BbvxVkJ3qaCIEkXfxJfGDrIkdT6lALb+Ga8=; b=Ptt9iZsJi+UyumJLr09m//YFNAUqYHKgNoxQoUJsL6YpN37y4QUn05TBuoi+F1NfhF QZkM3CTm0ZuXoUA7tvQSrCS+2l1/IpWcEpcTCp+Gqpcd2B2DsZYjAr3Q3jucwBZiIYgd QAUm4egiPUgsMkJHrEBMo+JZmBbVm6gsZnmi4=",
+      "x-google-dkim-signature": "v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net; s=20130820; h=x-gm-message-state:mime-version:from:date:message-id:subject:to :content-type; bh=fkbdtKo0BbvxVkJ3qaCIEkXfxJfGDrIkdT6lALb+Ga8=; b=GmhWF2oylKSZkMtoM1isUgXt3GneYSJGWYZIC+skzirDdfBPRecAVdAzPfAG2WMfEE 2318Mvsc7ss+deDYdzVfXDzlcaqN2nEK73g7FG7MmWN4YeBlcNZmJvOMtjogn55gxJ4j wJa+L07D/2Xa/CujnBH4KmwI0XtnyAMF/BW2AbWijZmQ9upqyVzRV5/hj5doaluj39Ob L8J2OVhL1/j5sOR6VNE7sZNGEC1P+dM5nJXurur3khwJpNXnWA84OjsEq4EJwZZQ5spn SyIJTsCt4uc/EFyUnoWcSeQWt3uakFjuChWYltZP5ZehdF7aSJwM9TDXDKgShKEKdMm0 SwDg==",
+      "x-gm-message-state": "ALoCoQmeIeafqK3KlQjUDmbV6NNtoJTO7AO1WL5k9l6k5H4E/dpDCVnbwr3eF5F38NmPTvz02RxB",
+      "x-received": "by 10.50.78.70 with SMTP id z6mr11306409igw.23.1411352842761; Sun, 21 Sep 2014 19:27:22 -0700 (PDT)",
+      "mime-version": "1.0",
+      "from": "Samuel Breed <sam@quickleft.com>",
+      "date": "Sun, 21 Sep 2014 20:27:02 -0600",
+      "message-id": "<CAMfQR9x2uHU8u8gFo0rY8fOO_CM=Y5paPS4LPFkTQQcVZpUssg@mail.gmail.com>",
+      "subject": "testing 123",
+      "to": "hello@destroy.email",
+      "content-type": "multipart/alternative; boundary=089e0112cfb0d8919705039e30fa"
+    },
+    "subject": "testing 123",
+    "messageId": "CAMfQR9x2uHU8u8gFo0rY8fOO_CM=Y5paPS4LPFkTQQcVZpUssg@mail.gmail.com",
+    "priority": "normal",
+    "from": [
+      {
+        "address": "sam@quickleft.com",
+        "name": "Samuel Breed"
+      }
+    ],
+    "to": [
+      {
+        "address": "hello@destroy.email",
+        "name": ""
+      }
+    ],
+    "date": "2014-09-22T02:27:02.000Z",
+    "dkim": "pass",
+    "spf": "pass",
+    "spamScore": 0,
+    "language": "english",
+    "cc": [],
+    "attachments": [],
+    "connection": {
+      "from": "sam@quickleft.com",
+      "to": [
+        "hello@destroy.email"
+      ],
+      "remoteAddress": "209.85.213.177",
+      "authentication": {
+        "username": false,
+        "authenticated": false,
+        "state": "NORMAL"
+      },
+      "id": "17e01a62"
+    },
+    "envelopeFrom": [
+      {
+        "address": "sam@quickleft.com",
+        "name": ""
+      }
+    ],
+    "envelopeTo": [
+      {
+        "address": "hello@destroy.email",
+        "name": ""
+      }
+    ]
+  }
+}

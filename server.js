@@ -24,11 +24,17 @@ server.route({
   path: '/',
   handler: function(request, reply) {
     if (request.payload.mailinMsg) {
-      var message = new Message(request.payload.mailinMsg);
+      var json = request.payload.mailinMsg;
+      console.log(typeof json);
+      console.log(json.to);
+      var message = new Message(json);
 
       message.saveAll()
         .then(function() {
           console.log('Message saved');
+        })
+        .catch(function(err) {
+          console.error(err);
         });
     }
 
