@@ -1,4 +1,5 @@
-var thinky = require('thinky')();
+var config = require('config');
+var thinky = require('thinky')(config.rethinkdb);
 var Receiver = require('./receiver');
 
 var Message = thinky.createModel('Message', {

@@ -2,6 +2,7 @@
   "name": "destroy.email",
   "version": "0.0.1",
   "dependencies": {
+    "config": "^1.2.0",
     "good": "^2.3.0",
     "hapi": "^6.8.1",
     "thinky": "^1.14.4"
