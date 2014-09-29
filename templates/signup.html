@@ -1,0 +1,44 @@
+{% extends './layouts/default.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form role="form" id="signup-form">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Pick a username..." name="username">
+      <h1>@destroy.email</h1>
+    </div>
+    <button type="button" class="btn btn-primary btn-lg hidden" disabled="disabled">Request an Invite</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block endscripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+jQuery(function($){
+  var $button = $('#signup-form button');
+
+  $('#signup-form input')
+    .on('focus', function() {
+      $button.removeClass('hidden');
+    })
+    .on('blur', function() {
+      if (this.value.length > 2) {
+        $(this).addClass('has-success');
+      } else {
+        $button.addClass('hidden');
+      }
+    })
+    .on('keydown', function() {
+      if (this.value.length > 2) {
+        $button.prop({ disabled: false });
+      } else {
+        $button.prop({ disabled: true });
+      }
+    });
+
+});
+</script>
+{% endblock %}

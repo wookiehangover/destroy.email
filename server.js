@@ -1,83 +1,66 @@
+var config = require('config');
 var Hapi = require('hapi');
-var good = require('good');
-var server = new Hapi.Server(process.env.PORT || 3000);
+var path = require('path');
 
-var Message = require('./models/message');
-
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: function(request, reply) {
-    reply({
-      name: 'destroy.email',
-      description: 'An API for your inbox',
-      beta: {
-        status: 'coming soon',
-        signup: 'curl -d you@example.com https://destroy.email/beta'
-      }
-    });
+var serverOptions = {
+  views: {
+    engines: {
+      html: require('swig')
+    },
+    path: path.join(__dirname, 'templates')
   }
-});
-
-var parse = function(data) {
-  var json = {};
-  try {
-    json = JSON.parse(data);
-  } catch(parseError) {
-    console.error(parseError);
-    console.error(parseError.stack);
-  }
-  return json;
 };
 
-server.route({
-  method: 'POST',
-  path: '/',
-  handler: function(request, reply) {
-    if (request.payload.mailinMsg) {
-      var json = request.payload.mailinMsg;
-      if (typeof json === 'string') {
-        json = parse(json);
-      }
-      var message = new Message(json);
+var server = new Hapi.Server(process.env.PORT || 3000, serverOptions);
 
-      return message.saveAll()
-        .then(function() {
-          console.log('Message saved');
-        })
-        .catch(function(err) {
-          console.error(err);
-        })
-        .finally(function() {
-          reply('Message saved');
-        });
-    }
+// Session and Auth Decorators
+require('./lib/session')(server);
+require('./lib/auth')(server);
 
-    reply();
+// Plugins
+server.pack.register([
+  {
+    plugin: require('good'),
   },
-  config: {
-    payload: {
-      parse: true
+  {
+    plugin: require('hapi-assets'),
+    options: config.assets
+  },
+  {
+    plugin: require('./routes/home')
+  },
+  {
+    plugin: require('./routes/webhook')
+  },
+  {
+    plugin: require('./routes/gmail-api')
+  }
+], function(err) {
+  if (err) throw err;
+});
+
+server.route([
+  {
+    method: 'POST',
+    path: '/beta',
+    handler: function(request, reply) {
+      // TODO - wire up to mailchimp API
+      reply();
+    }
+  },
+
+  // Static assets
+  {
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {
+        path: 'public',
+        listing: true
+      }
     }
   }
-});
-
-server.route({
-  method: 'POST',
-  path: '/beta',
-  handler: function(request, reply) {
-    // TODO - wire up to mailchimp API
-    reply();
-  }
-});
-
-server.pack.register({
-  plugin: good
-}, function(err) {
-  if (err) {
-    throw err;
-  }
-});
+]);
 
 server.start(function() {
   console.log('Server started at:', server.info.uri);
