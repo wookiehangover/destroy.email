@@ -9,60 +9,9 @@
 @medium-dark-grey: rgb(74, 74, 74);
 @brand-lowlight: darken(@brand-primary, 20%);
 
+// components
+@import "components/rainbows";
+@import "components/big-form";
 
-// Pages
-@import "pages/signup";
-
-@color0: white;
-@color1: red;
-@color2: orange;
-@color3: yellow;
-@color4: green;
-@color5: blue;
-@color6: indigo;
-@color7: violet;
-
-@keyframes rainbows {
-  0%    { background: @color0; }
-  12.5% { background: @color1; }
-  25%   { background: @color2; }
-  37.5% { background: @color3; }
-  50%   { background: @color4; }
-  62.5% { background: @color5; }
-  75%   { background: @color6; }
-  87.5% { background: @color7; }
-  100%  { background: @color0; }
-}
-@-webkit-keyframes rainbows { 
-  0%    { background: @color0; }
-  12.5% { background: @color1; }
-  25%   { background: @color2; }
-  37.5% { background: @color3; }
-  50%   { background: @color4; }
-  62.5% { background: @color5; }
-  75%   { background: @color6; }
-  87.5% { background: @color7; }
-  100%  { background: @color0; }
-}
-@-moz-keyframes rainbows { 
-  0%    { background: @color0; }
-  12.5% { background: @color1; }
-  25%   { background: @color2; }
-  37.5% { background: @color3; }
-  50%   { background: @color4; }
-  62.5% { background: @color5; }
-  75%   { background: @color6; }
-  87.5% { background: @color7; }
-  100%  { background: @color0; }
-}
-@-ms-keyframes rainbows {
-  0%    { background: @color0; }
-  12.5% { background: @color1; }
-  25%   { background: @color2; }
-  37.5% { background: @color3; }
-  50%   { background: @color4; }
-  62.5% { background: @color5; }
-  75%   { background: @color6; }
-  87.5% { background: @color7; }
-  100%  { background: @color0; }
-}
+// pages
+@import "pages/login.less";

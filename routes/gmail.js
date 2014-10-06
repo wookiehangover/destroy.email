@@ -1,5 +1,5 @@
-var drafts = require('../lib/drafts');
-var renewToken = require('../lib/renew-token');
+var drafts = require('../lib/google_api/drafts');
+var renewToken = require('../lib/google_api/token');
 var User = require('../models/user');
 
 exports.readDrafts = {
@@ -66,11 +66,13 @@ exports.renewToken = {
   }
 };
 
-exports.register = function(plugin) {
+exports.register = function(plugin, options, next) {
   plugin.route([
     exports.readDrafts,
     exports.renewToken
   ]);
+
+  next();
 };
 
 exports.register.attributes = {

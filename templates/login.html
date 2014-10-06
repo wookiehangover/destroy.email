@@ -1,0 +1,20 @@
+{% extends './layouts/default.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form role="form" id="login-form" class="big-ass-form">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="username" name="username" />
+      <h1>@destroy.email</h1>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="password" name="password" />
+      <button type="button" class="btn btn-primary btn-huge"><span class="glyphicon glyphicon-eye-open"></span></button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+

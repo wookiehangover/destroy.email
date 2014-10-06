@@ -17,8 +17,11 @@
 
 // Form inputs
 .form-control {
-  // kill the boxshadow
+  // kill the boxshadows
   .box-shadow(none);
+  &:focus {
+    .box-shadow(none);
+  }
 
   // Look at all this stupidness needed to override placeholder color
   &::-webkit-input-placeholder {

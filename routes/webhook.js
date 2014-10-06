@@ -14,7 +14,7 @@ var parse = function(data) {
 exports.register = function(plugin, options, next) {
   plugin.route({
     method: 'POST',
-    path: '/',
+    path: '/webhook',
     handler: function(request, reply) {
       if (request.payload.mailinMsg) {
         var json = request.payload.mailinMsg;

@@ -6179,18 +6179,125 @@ button.close {
 .form-control:-ms-input-placeholder {
   color: #d8d8d8;
 }
-#signup-form {
+@keyframes rainbows {
+  0% {
+    color: #ffffff;
+  }
+  12.5% {
+    color: #ff0000;
+  }
+  25% {
+    color: #ffa500;
+  }
+  37.5% {
+    color: #ffff00;
+  }
+  50% {
+    color: #008000;
+  }
+  62.5% {
+    color: #0000ff;
+  }
+  75% {
+    color: #4b0082;
+  }
+  87.5% {
+    color: #ee82ee;
+  }
+}
+@-webkit-keyframes rainbows {
+  0% {
+    color: #ffffff;
+  }
+  12.5% {
+    color: #ff0000;
+  }
+  25% {
+    color: #ffa500;
+  }
+  37.5% {
+    color: #ffff00;
+  }
+  50% {
+    color: #008000;
+  }
+  62.5% {
+    color: #0000ff;
+  }
+  75% {
+    color: #4b0082;
+  }
+  87.5% {
+    color: #ee82ee;
+  }
+}
+@-moz-keyframes rainbows {
+  0% {
+    color: #ffffff;
+  }
+  12.5% {
+    color: #ff0000;
+  }
+  25% {
+    color: #ffa500;
+  }
+  37.5% {
+    color: #ffff00;
+  }
+  50% {
+    color: #008000;
+  }
+  62.5% {
+    color: #0000ff;
+  }
+  75% {
+    color: #4b0082;
+  }
+  87.5% {
+    color: #ee82ee;
+  }
+}
+@-ms-keyframes rainbows {
+  0% {
+    color: #ffffff;
+  }
+  12.5% {
+    color: #ff0000;
+  }
+  25% {
+    color: #ffa500;
+  }
+  37.5% {
+    color: #ffff00;
+  }
+  50% {
+    color: #008000;
+  }
+  62.5% {
+    color: #0000ff;
+  }
+  75% {
+    color: #4b0082;
+  }
+  87.5% {
+    color: #ee82ee;
+  }
+}
+.big-ass-form {
   text-align: center;
   width: 100%;
   margin-top: 20%;
 }
-#signup-form .form-group {
+.big-ass-form .form-group {
   padding-bottom: 3em;
 }
-#signup-form .form-group {
+.big-ass-form .form-group .btn-huge {
+  vertical-align: top;
+}
+.big-ass-form .form-group {
   text-align: left;
 }
-#signup-form input.form-control {
+.big-ass-form input.form-control {
   display: inline-block;
   height: auto;
   max-width: 50%;
@@ -6201,157 +6308,61 @@ button.close {
   -o-transition: all 200ms easeIn;
   transition: all 200ms easeIn;
 }
-#signup-form input.form-control.has-success {
+.big-ass-form input.form-control.has-success {
   color: #13b5c1;
 }
 @media (min-width: 1200px) {
-  #signup-form input.form-control {
+  .big-ass-form input.form-control {
     font-size: 4em;
   }
 }
 @media (max-width: 480px) {
-  #signup-form input.form-control {
+  .big-ass-form input.form-control {
     max-width: 100%;
   }
 }
-#signup-form h1 {
+.big-ass-form h1 {
   display: inline-block;
   color: #4de2ed;
   font-size: 3em;
   font-weight: normal;
 }
 @media (min-width: 1200px) {
-  #signup-form h1 {
+  .big-ass-form h1 {
     font-size: 4.5em;
   }
 }
-#signup-form .btn-lg {
+.big-ass-form .btn {
   border-radius: 3px;
   opacity: 1;
   filter: alpha(opacity=100);
-  -webkit-transition: opacity 300ms easeIn;
-  -o-transition: opacity 300ms easeIn;
-  transition: opacity 300ms easeIn;
+  -webkit-transition: opacity 300ms ease-in-out;
+  -o-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
 }
-#signup-form .btn-lg[disabled] {
+.big-ass-form .btn[disabled] {
   opacity: 0.3;
   filter: alpha(opacity=30);
 }
-@keyframes rainbows {
-  0% {
-    background: #ffffff;
-  }
-  12.5% {
-    background: #ff0000;
-  }
-  25% {
-    background: #ffa500;
-  }
-  37.5% {
-    background: #ffff00;
-  }
-  50% {
-    background: #008000;
-  }
-  62.5% {
-    background: #0000ff;
-  }
-  75% {
-    background: #4b0082;
-  }
-  87.5% {
-    background: #ee82ee;
-  }
-  100% {
-    background: #ffffff;
+.big-ass-form .btn.btn-huge {
+  font-size: 2em;
+  padding: 0.5em;
+  line-height: 1;
+}
+@media (min-width: 1200px) {
+  .big-ass-form .btn.btn-huge {
+    font-size: 3em;
   }
 }
-@-webkit-keyframes rainbows {
-  0% {
-    background: #ffffff;
-  }
-  12.5% {
-    background: #ff0000;
-  }
-  25% {
-    background: #ffa500;
-  }
-  37.5% {
-    background: #ffff00;
-  }
-  50% {
-    background: #008000;
-  }
-  62.5% {
-    background: #0000ff;
-  }
-  75% {
-    background: #4b0082;
-  }
-  87.5% {
-    background: #ee82ee;
-  }
-  100% {
-    background: #ffffff;
-  }
+#login-form .form-group {
+  padding-bottom: 1em;
 }
-@-moz-keyframes rainbows {
-  0% {
-    background: #ffffff;
-  }
-  12.5% {
-    background: #ff0000;
-  }
-  25% {
-    background: #ffa500;
-  }
-  37.5% {
-    background: #ffff00;
-  }
-  50% {
-    background: #008000;
-  }
-  62.5% {
-    background: #0000ff;
-  }
-  75% {
-    background: #4b0082;
-  }
-  87.5% {
-    background: #ee82ee;
-  }
-  100% {
-    background: #ffffff;
-  }
-}
-@-ms-keyframes rainbows {
-  0% {
-    background: #ffffff;
-  }
-  12.5% {
-    background: #ff0000;
-  }
-  25% {
-    background: #ffa500;
-  }
-  37.5% {
-    background: #ffff00;
-  }
-  50% {
-    background: #008000;
-  }
-  62.5% {
-    background: #0000ff;
-  }
-  75% {
-    background: #4b0082;
-  }
-  87.5% {
-    background: #ee82ee;
-  }
-  100% {
-    background: #ffffff;
-  }
+#login-form .btn-huge:hover {
+  -webkit-animation: rainbows 500ms infinite;
+  -o-animation: rainbows 500ms infinite;
+  animation: rainbows 500ms infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
 }
 
 /*# sourceMappingURL=main.css.map */

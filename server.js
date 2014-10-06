@@ -15,7 +15,6 @@ var server = new Hapi.Server(process.env.PORT || 3000, serverOptions);
 
 // Session and Auth Decorators
 require('./lib/session')(server);
-require('./lib/auth')(server);
 
 // Plugins
 server.pack.register([
@@ -27,28 +26,22 @@ server.pack.register([
     options: config.assets
   },
   {
-    plugin: require('./routes/home')
+    plugin: require('./lib/auth')
+  },
+  {
+    plugin: require('./routes/user')
   },
   {
     plugin: require('./routes/webhook')
   },
   {
-    plugin: require('./routes/gmail-api')
+    plugin: require('./routes/gmail')
   }
 ], function(err) {
   if (err) throw err;
 });
 
 server.route([
-  {
-    method: 'POST',
-    path: '/beta',
-    handler: function(request, reply) {
-      // TODO - wire up to mailchimp API
-      reply();
-    }
-  },
-
   // Static assets
   {
     method: 'GET',
@@ -62,6 +55,8 @@ server.route([
   }
 ]);
 
+
 server.start(function() {
   console.log('Server started at:', server.info.uri);
 });
+
