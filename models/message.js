@@ -1,4 +1,3 @@
-var Promise = require('bluebird');
 var _ = require('lodash');
 var config = require('config');
 var thinky = require('thinky')(config.rethinkdb);
