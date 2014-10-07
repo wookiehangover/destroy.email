@@ -11,16 +11,6 @@ exports.home = {
   }
 };
 
-exports.create = {
-  method: 'GET',
-  path: '/create',
-  handler: function(request, reply) {
-    reply.view('create', {
-      title: 'destroy.email'
-    });
-  }
-};
-
 exports.root = {
   method: 'GET',
   path: '/',
@@ -32,6 +22,16 @@ exports.root = {
         status: 'coming soon',
         signup: 'curl -d email=you@example.com https://destroy.email/beta'
       }
+    });
+  }
+};
+
+exports.redeem = {
+  method: 'GET',
+  path: '/beta/redeem',
+  handler: function(request, reply) {
+    reply.view('create', {
+      title: 'destroy.email'
     });
   }
 };
@@ -57,7 +57,7 @@ exports.register = function(plugin, options, next) {
   plugin.route([
     exports.root,
     exports.home,
-    exports.create,
+    exports.redeem,
     exports.beta
   ]);
 
