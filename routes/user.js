@@ -33,7 +33,7 @@ exports.user = {
             return user.inbox();
           })
           .then(function(inbox) {
-            var parsedInbox = _.map(inbox.reverse(), function(msg) {
+            var parsedInbox = _.map(inbox, function(msg) {
               var $ = cheerio.load(msg.html);
               $('script').remove();
               msg.html = $.html();

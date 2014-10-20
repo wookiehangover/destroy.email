@@ -48,7 +48,7 @@ User.define('inbox', function() {
   return r.table('Message_Receiver').eqJoin('Receiver_id', r.table('Receiver')).zip()
     .filter({ address: email })
     .eqJoin('Message_id', r.table('Message')).zip()
-    .orderBy(r.row('headers')('date')).run();
+    .orderBy(r.desc('createdAt')).run();
 });
 
 User.defineStatic('createOrUpdate', function(json) {
