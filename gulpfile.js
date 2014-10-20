@@ -2,12 +2,23 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var exec = require('child_process').exec;
 var sourcemaps = require('gulp-sourcemaps');
+var csso = require('gulp-csso');
+var rename = require('gulp-rename');
 
 gulp.task('less', function() {
   gulp.src('assets/less/main.less')
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('public/css'));
+});
+
+gulp.task('cssmin', function() {
+  gulp.src('public/css/main.css')
+    .pipe(csso())
+    .pipe(rename({
+      suffix: '.min'
+    }))
     .pipe(gulp.dest('public/css'));
 });
 
