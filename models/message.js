@@ -2,9 +2,11 @@ var _ = require('lodash');
 var config = require('config');
 var thinky = require('thinky')(config.rethinkdb);
 var Receiver = require('./receiver');
+var r = thinky.r;
 
 var Message = thinky.createModel('Message', {
-  id: String
+  id: String,
+  createdAt: { _type: Date, default: r.now() }
 });
 
 Message.pre('save', function(next) {

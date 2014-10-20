@@ -4,13 +4,13 @@ var thinky = require('thinky')(config.rethinkdb);
 var bcrypt = require('bcrypt');
 var Promise = require('bluebird');
 var compare = Promise.promisify(bcrypt.compare);
-
 var r = thinky.r;
 
 var User = thinky.createModel('User', {
   id: String,
   password: String,
   username: String,
+  createdAt: {_type: Date, default: r.now()}
 }, {
   pk: 'username'
 });

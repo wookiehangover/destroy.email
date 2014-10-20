@@ -10,7 +10,7 @@
       <h3>{{ msg.subject }}</h3>
       <p><i>{{ msg.from|first.address }}</i></p>
       <div class="well">
-        <iframe id="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
+        <iframe id="msg-{{msg.id}}" sandbox="allow-same-origin allow-top-navigation allow-scripts" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
     </article>
     {% endfor %}

@@ -3,6 +3,8 @@ var beta = require('../lib/beta');
 var User = require('../models/user');
 var path = require('path');
 
+var cheerio = require('cheerio');
+
 var tmpl = require('fs').readFileSync(path.resolve(__dirname + '/../templates/iframeHelper.ejs'));
 var iframeHelper = _.template(tmpl);
 
@@ -31,9 +33,15 @@ exports.user = {
             return user.inbox();
           })
           .then(function(inbox) {
+            var parsedInbox = _.map(inbox.reverse(), function(msg) {
+              var $ = cheerio.load(msg.html);
+              $('script').remove();
+              msg.html = $.html();
+              return msg;
+            });
             reply.view('inbox', {
               title: 'Inbox',
-              inbox: inbox.reverse(),
+              inbox: parsedInbox,
               iframeHelper: iframeHelper
             });
           })
@@ -49,9 +57,7 @@ exports.user = {
       auth: 'session'
     }
   }
-
-}
-
+};
 
 
 exports.root = {
