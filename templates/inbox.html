@@ -3,12 +3,14 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-<div class="container inbox">
-  {% for msg in inbox %}
-  <article class="message">
-    <h3>{{ msg.subject }}</h3>
-    <pre>{{ msg.text }}</pre>
-  </article>
-  {% endfor %}
+<div class="container">
+  <div class="inbox">
+    {% for msg in inbox %}
+    <article class="message col-xs-6 col-xs-offset-3">
+      <h3>{{ msg.subject }}</h3>
+      <pre>{{ msg.text }}</pre>
+    </article>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
