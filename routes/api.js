@@ -11,6 +11,10 @@ exports.inbox = {
         })
         .then(function(inbox) {
           reply(inbox);
+        })
+        .catch(function(error) {
+          console.log(error);
+          reply(500);
         });
     } else {
       reply(403);
