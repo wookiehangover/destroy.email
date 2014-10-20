@@ -33,7 +33,7 @@ exports.user = {
           .then(function(inbox) {
             reply.view('inbox', {
               title: 'Inbox',
-              inbox: inbox,
+              inbox: inbox.reverse(),
               iframeHelper: iframeHelper
             });
           })

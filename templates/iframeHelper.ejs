@@ -1,5 +1,34 @@
 <script>
-window.addEventListener('message', function(e) {
-  e.source.postMessage('<%= id %>|' + document.body.offsetHeight, e.origin);
-}, false);
+(function() {
+  var domLoaded = new Promise(function(resolve, reject) {
+    document.addEventListener('DOMContentLoaded', function(){
+      resolve();
+    });
+  });
+
+  var winLoaded = new Promise(function(resolve, reject) {
+    window.addEventListener('load', function(){
+      resolve();
+    });
+  });
+
+  function outerHeight(el){
+    var height = el.offsetHeight;
+    var style = getComputedStyle(el);
+    height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+    return height;
+  }
+
+  window.addEventListener('message', function(e) {
+    function updateHeight() {
+      e.source.postMessage('<%= id %>|' + outerHeight(document.body), e.origin);
+    }
+
+    domLoaded
+      .then(function() {
+        updateHeight();
+        return winLoaded.then(updateHeight);
+      });
+  }, false);
+})()
 </script>

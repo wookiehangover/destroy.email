@@ -47,7 +47,8 @@ User.define('inbox', function() {
   var email = this.username + '@destroy.email';
   return r.table('Message_Receiver').eqJoin('Receiver_id', r.table('Receiver')).zip()
     .filter({ address: email })
-    .eqJoin('Message_id', r.table('Message')).zip().run();
+    .eqJoin('Message_id', r.table('Message')).zip()
+    .orderBy(r.row('headers')('date')).run();
 });
 
 User.defineStatic('createOrUpdate', function(json) {
