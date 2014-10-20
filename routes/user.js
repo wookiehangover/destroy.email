@@ -15,14 +15,25 @@ exports.root = {
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
-    reply({
-      name: 'destroy.email',
-      description: 'An API for your inbox',
-      beta: {
-        status: 'coming soon',
-        signup: 'curl -d email=you@example.com https://destroy.email/beta'
-      }
-    });
+    if (request.auth.isAuthenticated) {
+      reply({
+        name: request.auth.credentials.username + '@destroy.email',
+        inbox: 'Coming soon',
+        redirects: []
+      });
+    } else {
+      reply({
+        name: 'destroy.email',
+        description: 'An API for your inbox',
+        beta: {
+          status: 'coming soon',
+          signup: 'curl -d email=you@example.com https://destroy.email/beta'
+        }
+      });
+    }
+  },
+  config: {
+    auth: 'session'
   }
 };
 

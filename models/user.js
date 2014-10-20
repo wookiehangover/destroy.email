@@ -5,9 +5,14 @@ var bcrypt = require('bcrypt');
 var Promise = require('bluebird');
 var compare = Promise.promisify(bcrypt.compare);
 
+var r = thinky.r;
+
 var User = thinky.createModel('User', {
   id: String,
-  password: String
+  password: String,
+  username: String,
+}, {
+  pk: 'username'
 });
 
 User.pre('save', true, function(next) {
@@ -31,8 +36,18 @@ User.pre('save', true, function(next) {
 User.defineStatic('authenticate', function(username, password) {
   return User.filter({ username: username }).run().then(function(result){
     var user = result[0];
-    return compare(password, user.password);
+    return compare(password, user.password)
+      .then(function() {
+        return _.pick(user, 'username', 'id');
+      });
   });
+});
+
+User.define('inbox', function() {
+  var email = this.username + '@destroy.email';
+  return r.table('Message_Receiver').eqJoin('Receiver_id', r.table('Receiver')).zip()
+    .filter({ address: email })
+    .eqJoin('Message_id', r.table('Message')).zip().run();
 });
 
 User.defineStatic('createOrUpdate', function(json) {

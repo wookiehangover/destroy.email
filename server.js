@@ -26,9 +26,6 @@ server.pack.register([
     options: config.assets
   },
   {
-    plugin: require('./lib/auth')
-  },
-  {
     plugin: require('./routes/user')
   },
   {
@@ -40,6 +37,12 @@ server.pack.register([
 ], function(err) {
   if (err) throw err;
 });
+
+server.pack.register(require('./routes/api'), {
+  route: {
+    prefix: '/api'
+  }
+}, function() {});
 
 server.route([
   // Static assets
