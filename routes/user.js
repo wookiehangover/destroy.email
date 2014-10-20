@@ -1,6 +1,10 @@
 var _ = require('lodash');
 var beta = require('../lib/beta');
 var User = require('../models/user');
+var path = require('path');
+
+var tmpl = require('fs').readFileSync(path.resolve(__dirname + '/../templates/iframeHelper.ejs'));
+var iframeHelper = _.template(tmpl);
 
 exports.user = {
   home: {
@@ -29,7 +33,8 @@ exports.user = {
           .then(function(inbox) {
             reply.view('inbox', {
               title: 'Inbox',
-              inbox: inbox
+              inbox: inbox,
+              iframeHelper: iframeHelper
             });
           })
           .catch(function(error) {

@@ -6376,5 +6376,13 @@ button.close {
   margin-right: -15px;
   padding: 2em 0;
 }
+.inbox article iframe {
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  border: 0px none transparent;
+  padding: 0px;
+  overflow: hidden;
+}
 
 /*# sourceMappingURL=main.css.map */

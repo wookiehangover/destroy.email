@@ -9,9 +9,30 @@
     <article class="message col-xs-12 col-md-8 col-md-offset-2">
       <h3>{{ msg.subject }}</h3>
       <p><i>{{ msg.from|first.address }}</i></p>
-      <pre>{{ msg.text }}</pre>
+      <div class="well">
+        <iframe id="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
+      </div>
     </article>
     {% endfor %}
   </div>
 </div>
+{% endblock %}
+
+
+{% block endscripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+jQuery(function($){
+  window.addEventListener('message', function(e) {
+    var parts = e.data.split('|');
+    var id = '#msg-' + parts[0];
+    var height = parts[1];
+    $(id).height(parseInt(height, 10) + 50);
+  }, false);
+
+  $('.inbox article iframe').each(function() {
+    this.contentWindow.postMessage('height', location.origin);
+  });
+});
+</script>
 {% endblock %}
