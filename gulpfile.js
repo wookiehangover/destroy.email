@@ -13,10 +13,14 @@ gulp.task('less', function() {
 
 gulp.task('watch', function() {
   var child = exec('npm run dev');
-  process.stdout.pipe(child.stdout);
-  process.stderr.pipe(child.stderr);
-  process.on('exit', child.exit);
-  child.on('exit', process.exit);
+  child.stdout.pipe(process.stdout);
+  child.stderr.pipe(process.stderr);
+  process.on('exit', function(code) {
+    child.exit(code);
+  });
+  child.on('exit', function(code) {
+    process.exit(code);
+  });
 
   gulp.watch('assets/less/**/*.less', ['less']);
 });

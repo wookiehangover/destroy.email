@@ -6167,6 +6167,10 @@ button.close {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 .form-control::-webkit-input-placeholder {
   color: #d8d8d8;
 }
@@ -6363,6 +6367,26 @@ button.close {
   animation: rainbows 500ms infinite;
   -webkit-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
+}
+.inbox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.inbox article {
+  margin: auto;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  max-width: 50%;
+  padding: 2em 0;
 }
 
 /*# sourceMappingURL=main.css.map */
