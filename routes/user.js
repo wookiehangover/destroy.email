@@ -1,26 +1,60 @@
+var _ = require('lodash');
 var beta = require('../lib/beta');
+var User = require('../models/user');
 
-exports.home = {
-  method: 'GET',
-  path: '/home',
-  handler: function(request, reply) {
-    reply(request.auth.credentials.profile);
+exports.user = {
+  home: {
+    method: 'GET',
+    path: '/home',
+    handler: function(request, reply) {
+      reply({
+        name: request.auth.credentials.username + '@destroy.email',
+        inbox: 'curl https://destroy.email/api/inbox',
+        redirects: []
+      });
+    },
+    config: {
+      auth: 'session'
+    }
   },
-  config: {
-    auth: 'session'
+  inbox: {
+    method: 'GET',
+    path: '/inbox',
+    handler: function(request, reply) {
+      if (request.auth.isAuthenticated) {
+        User.get(request.auth.credentials.username).run()
+          .then(function(user) {
+            return user.inbox();
+          })
+          .then(function(inbox) {
+            reply.view('inbox', {
+              title: 'Inbox',
+              inbox: inbox
+            });
+          })
+          .catch(function(error) {
+            console.log(error)
+            reply(500);
+          });
+      } else {
+        reply(403);
+      }
+    },
+    config: {
+      auth: 'session'
+    }
   }
-};
+
+}
+
+
 
 exports.root = {
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {
-      reply({
-        name: request.auth.credentials.username + '@destroy.email',
-        inbox: 'Coming soon',
-        redirects: []
-      });
+      reply.redirect('/home');
     } else {
       reply({
         name: 'destroy.email',
@@ -67,10 +101,11 @@ exports.beta = {
 exports.register = function(plugin, options, next) {
   plugin.route([
     exports.root,
-    exports.home,
     exports.redeem,
-    exports.beta
+    exports.beta,
   ]);
+
+  plugin.route(_.values(exports.user));
 
   next();
 };
