@@ -51,7 +51,7 @@ exports.message = {
         $('a').each(function() {
           var href = $(this).attr('href');
           var text = $(this).text();
-          if (href) {
+          if (/http/.test(href)) {
             if (/unsubscribe/.test(text)) {
               unsubscribe.push(href);
             } else {
@@ -61,11 +61,11 @@ exports.message = {
         });
 
         if (links.length > 0) {
-          message.links = links;
+          message.links = _.unique(links);
         }
 
         if (unsubscribe.length > 0) {
-          message.unsubscribe = unsubscribe;
+          message.unsubscribe = _.unique(unsubscribe);
         }
 
         if (request.query.opengraph) {
