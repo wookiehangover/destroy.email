@@ -26,13 +26,29 @@ exports.inbox = {
   }
 };
 
-
 var Message = require('../models/message');
 var async = require('async');
 var opengrapher = require('opengrapher');
 var cheerio = require('cheerio');
 
 exports.message = {
+  archive: {
+    method: 'POST',
+    path: '/messages/{id}/archive',
+    handler: function(request, reply) {
+      if (!request.params.id) {
+        return reply(412);
+      }
+      Message.get(request.params.id).run()
+        .then(function(message) {
+          message.archived = true;
+          return message.save();
+        })
+        .then(function() {
+          return reply(200);
+        });
+    }
+  },
   show: {
     method: 'GET',
     path: '/messages/{id}',
@@ -47,7 +63,7 @@ exports.message = {
         var $ = cheerio.load(message.html);
         var links = [];
         var unsubscribe = [];
-        
+
         $('a').each(function() {
           var href = $(this).attr('href');
           var text = $(this).text();

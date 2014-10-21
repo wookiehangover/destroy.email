@@ -1,14 +1,11 @@
 var _ = require('lodash');
-var beta = require('../lib/beta');
 var User = require('../models/user');
 var path = require('path');
-
+var url = require('url');
 var cheerio = require('cheerio');
 
 var tmpl = require('fs').readFileSync(path.resolve(__dirname + '/../templates/iframeHelper.ejs'));
 var iframeHelper = _.template(tmpl);
-
-
 
 function authenticate(request) {
   return User.get(request.auth.credentials.username).run()
@@ -30,12 +27,15 @@ exports.inbox = {
         var $ = cheerio.load(msg.html);
         $('script').remove();
 
+        $('a').attr({
+          target: '_BLANK'
+        });
+
         $('img').each(function() {
           var src = $(this).attr('src');
           var safe = new Buffer(src);
           var attrs = {
             onerror: 'this.parentNode.removeChild(this)',
-            target: '_BLANK'
           };
 
           var uri = url.parse(src);
@@ -44,7 +44,7 @@ exports.inbox = {
             attrs.src = '/inbox/proxy?uri=' + safe.toString('base64');
           }
 
-          $(this).attr(props);
+          $(this).attr(attrs);
         });
 
         msg.html = $.html();

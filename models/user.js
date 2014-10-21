@@ -48,6 +48,7 @@ User.define('inbox', function() {
   return r.table('Message_Receiver').eqJoin('Receiver_id', r.table('Receiver')).zip()
     .filter({ address: email })
     .eqJoin('Message_id', r.table('Message')).zip()
+    .filter({ archived: false })
     .orderBy(r.desc('createdAt')).run();
 });
 

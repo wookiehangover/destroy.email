@@ -6,8 +6,11 @@ var r = thinky.r;
 
 var Message = thinky.createModel('Message', {
   id: String,
-  createdAt: { _type: Date, default: r.now() }
+  createdAt: { _type: Date, default: r.now() },
+  archived: { _type: Boolean, default: false }
 });
+
+Message.ensureIndex('archived');
 
 Message.pre('save', function(next) {
   var addresses = _.pluck(this.to, 'address');

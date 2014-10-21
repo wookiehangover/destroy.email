@@ -6,14 +6,14 @@
 <div class="container">
   <div class="inbox">
     {% for msg in inbox %}
-    <article class="message col-xs-12 col-md-8 col-md-offset-2">
+    <article class="message col-xs-12 col-md-8 col-md-offset-2 msg-{{msg.id}}">
       <h3>{{ msg.subject }}</h3>
       <p><i>{{ msg.from|first.address }}</i></p>
       <div class="well">
-        <iframe id="msg-{{msg.id}}" sandbox="allow-same-origin allow-top-navigation allow-scripts" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
+        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
       <div class="actions">
-        <button class="btn btn-default btn-lg">Delete</button>
+        <button class="btn btn-default btn-lg" data-archive="{{ msg.id }}">Archive</button>
       </div>
     </article>
     {% endfor %}
@@ -28,13 +28,23 @@
 jQuery(function($){
   window.addEventListener('message', function(e) {
     var parts = e.data.split('|');
-    var id = '#msg-' + parts[0];
+    var id = 'iframe.msg-' + parts[0];
     var height = parts[1];
     $(id).height(parseInt(height, 10) + 50);
   }, false);
 
   $('.inbox article iframe').each(function() {
     this.contentWindow.postMessage('height', location.origin);
+  });
+
+  $('button[data-archive]').click(function(e) {
+    var id = $(this).data('archive');
+    var elem = 'article.msg-'+ id;
+
+    $.post('/api/messages/'+ id +'/archive').then(function() {
+      $(elem).remove();
+    })
+    return false;
   });
 });
 </script>
