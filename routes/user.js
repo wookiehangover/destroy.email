@@ -4,7 +4,9 @@ exports.root = {
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
-    reply.view('home');
+    reply.view('home', {
+      title: 'Destroy.EMAIL | Eliminate your inbox'
+    });
   }
 };
 

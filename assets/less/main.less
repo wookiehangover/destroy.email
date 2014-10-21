@@ -43,9 +43,10 @@ html, body {
 
   strong {
     color: @brand-primary;
-    &:hover {
-      .animation(rainbows 10s infinite);
-    }
+  }
+
+  &:hover strong {
+    .animation(rainbows 10s infinite);
   }
 
   @media (min-width: @screen-lg-min) {

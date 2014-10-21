@@ -6433,7 +6433,7 @@ body {
 .home section h1 strong {
   color: #4de2ed;
 }
-.home section h1 strong:hover {
+.home section h1:hover strong {
   -webkit-animation: rainbows 10s infinite;
   -o-animation: rainbows 10s infinite;
   animation: rainbows 10s infinite;
