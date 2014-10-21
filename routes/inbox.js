@@ -31,6 +31,20 @@ exports.inbox = {
           target: '_BLANK'
         });
 
+        $('[background]').each(function() {
+          var src = $(this).attr('background');
+          var safe = new Buffer(src);
+          var attrs = {};
+
+          var uri = url.parse(src);
+          var protocol = process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
+          if (uri.protocol !== protocol) {
+            attrs.background = '/inbox/proxy?uri=' + safe.toString('base64');
+          }
+
+          $(this).attr(attrs);
+        });
+
         $('img').each(function() {
           var src = $(this).attr('src');
           var safe = new Buffer(src);
