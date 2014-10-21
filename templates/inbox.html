@@ -12,6 +12,9 @@
       <div class="well">
         <iframe id="msg-{{msg.id}}" sandbox="allow-same-origin allow-top-navigation allow-scripts" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
+      <div class="actions">
+        <button class="btn btn-default btn-lg">Delete</button>
+      </div>
     </article>
     {% endfor %}
   </div>

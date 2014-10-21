@@ -1,64 +1,5 @@
 var _ = require('lodash');
 var beta = require('../lib/beta');
-var User = require('../models/user');
-var path = require('path');
-
-var cheerio = require('cheerio');
-
-var tmpl = require('fs').readFileSync(path.resolve(__dirname + '/../templates/iframeHelper.ejs'));
-var iframeHelper = _.template(tmpl);
-
-exports.user = {
-  home: {
-    method: 'GET',
-    path: '/home',
-    handler: function(request, reply) {
-      reply({
-        name: request.auth.credentials.username + '@destroy.email',
-        inbox: 'curl https://destroy.email/api/inbox',
-        redirects: []
-      });
-    },
-    config: {
-      auth: 'session'
-    }
-  },
-  inbox: {
-    method: 'GET',
-    path: '/inbox',
-    handler: function(request, reply) {
-      if (request.auth.isAuthenticated) {
-        User.get(request.auth.credentials.username).run()
-          .then(function(user) {
-            return user.inbox();
-          })
-          .then(function(inbox) {
-            var parsedInbox = _.map(inbox, function(msg) {
-              var $ = cheerio.load(msg.html);
-              $('script').remove();
-              msg.html = $.html();
-              return msg;
-            });
-            reply.view('inbox', {
-              title: 'Inbox',
-              inbox: parsedInbox,
-              iframeHelper: iframeHelper
-            });
-          })
-          .catch(function(error) {
-            console.log(error)
-            reply(500);
-          });
-      } else {
-        reply(403);
-      }
-    },
-    config: {
-      auth: 'session'
-    }
-  }
-};
-
 
 exports.root = {
   method: 'GET',
@@ -76,6 +17,21 @@ exports.root = {
         }
       });
     }
+  },
+  config: {
+    auth: 'session'
+  }
+};
+
+exports.home = {
+  method: 'GET',
+  path: '/home',
+  handler: function(request, reply) {
+    reply({
+      name: request.auth.credentials.username + '@destroy.email',
+      inbox: 'https://destroy.email/inbox',
+      redirects: []
+    });
   },
   config: {
     auth: 'session'
@@ -122,6 +78,6 @@ exports.register = function(plugin, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'home',
+  name: 'user',
   version: '0.0.1'
 };

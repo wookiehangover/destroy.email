@@ -26,6 +26,9 @@ server.pack.register([
     plugin: require('./routes/user')
   },
   {
+    plugin: require('./routes/inbox')
+  },
+  {
     plugin: require('./routes/webhook')
   },
   {
