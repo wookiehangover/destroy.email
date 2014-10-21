@@ -91,13 +91,10 @@ exports.message = {
             }
             reply(message);
           });
-        
         } else {
           reply(message);
         }
-
       });
-      
     },
     config: {
       auth: 'session'
