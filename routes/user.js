@@ -1,25 +1,10 @@
-var _ = require('lodash');
 var beta = require('../lib/beta');
 
 exports.root = {
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      reply.redirect('/home');
-    } else {
-      reply({
-        name: 'destroy.email',
-        description: 'An API for your inbox',
-        beta: {
-          status: 'coming soon',
-          signup: 'curl -d email=you@example.com https://destroy.email/beta'
-        }
-      });
-    }
-  },
-  config: {
-    auth: 'session'
+    reply.view('home');
   }
 };
 
@@ -38,6 +23,21 @@ exports.home = {
   }
 };
 
+exports.beta = {
+  method: 'GET',
+  path: '/beta',
+  handler: function(request, reply) {
+    reply({
+      name: 'destroy.email',
+      description: 'An API for your inbox',
+      beta: {
+        status: 'coming soon',
+        signup: 'curl -d email=you@example.com https://destroy.email/beta'
+      }
+    });
+  }
+};
+
 exports.redeem = {
   method: 'GET',
   path: '/beta/redeem',
@@ -48,7 +48,7 @@ exports.redeem = {
   }
 };
 
-exports.beta = {
+exports.betaCreate = {
   method: 'POST',
   path: '/beta',
   handler: function(request, reply) {
@@ -70,9 +70,9 @@ exports.register = function(plugin, options, next) {
     exports.root,
     exports.redeem,
     exports.beta,
+    exports.betaCreate,
+    exports.home
   ]);
-
-  plugin.route(_.values(exports.user));
 
   next();
 };

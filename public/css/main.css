@@ -6186,9 +6186,13 @@ button.close {
 .form-control:-ms-input-placeholder {
   color: #d8d8d8;
 }
+html,
+body {
+  height: 100%;
+}
 @keyframes rainbows {
   0% {
-    color: #ffffff;
+    color: #4de2ed;
   }
   12.5% {
     color: #ff0000;
@@ -6214,7 +6218,7 @@ button.close {
 }
 @-webkit-keyframes rainbows {
   0% {
-    color: #ffffff;
+    color: #4de2ed;
   }
   12.5% {
     color: #ff0000;
@@ -6240,7 +6244,7 @@ button.close {
 }
 @-moz-keyframes rainbows {
   0% {
-    color: #ffffff;
+    color: #4de2ed;
   }
   12.5% {
     color: #ff0000;
@@ -6266,7 +6270,7 @@ button.close {
 }
 @-ms-keyframes rainbows {
   0% {
-    color: #ffffff;
+    color: #4de2ed;
   }
   12.5% {
     color: #ff0000;
@@ -6405,6 +6409,37 @@ button.close {
 }
 @media (min-width: 1200px) {
   .inbox > h1 {
+    font-size: 4.5em;
+  }
+}
+.home {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  height: 100%;
+}
+.home section {
+  display: inline-block;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
+.home section h1 {
+  color: #222222;
+  padding-bottom: 1em;
+}
+.home section h1 strong {
+  color: #4de2ed;
+}
+.home section h1 strong:hover {
+  -webkit-animation: rainbows 10s infinite;
+  -o-animation: rainbows 10s infinite;
+  animation: rainbows 10s infinite;
+}
+@media (min-width: 1200px) {
+  .home section h1 {
     font-size: 4.5em;
   }
 }

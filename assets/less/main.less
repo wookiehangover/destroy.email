@@ -9,6 +9,10 @@
 @medium-dark-grey: rgb(74, 74, 74);
 @brand-lowlight: darken(@brand-primary, 20%);
 
+html, body {
+  height: 100%;
+}
+
 // components
 @import "components/rainbows";
 @import "components/big-form";
@@ -16,3 +20,35 @@
 // pages
 @import "pages/login.less";
 @import "pages/inbox.less";
+
+.home {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  height: 100%;
+}
+
+.home section {
+  display: inline-block;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
+
+.home section h1 {
+  color: @gray-darker;
+  padding-bottom: 1em;
+
+  strong {
+    color: @brand-primary;
+    &:hover {
+      .animation(rainbows 10s infinite);
+    }
+  }
+
+  @media (min-width: @screen-lg-min) {
+    font-size: @big-ass-font-lg;
+  }
+}

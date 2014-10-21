@@ -1,0 +1,55 @@
+{% extends './layouts/default.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container home">
+  <section>
+    <h1><strong>Beautiful</strong>.EMAIL</h1>
+    <a href="/beta" class="btn btn-default">Request an Invite</a>
+  </section>
+</div>
+{% endblock %}
+
+
+{% block endscripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script>
+jQuery(function($){
+  var messages = ['Beautiful', 'Destroy', 'Delightful',
+  'Arresting', 'Exquisite', 'Purposeful', 'Acute', 'ELIMINATE',
+  'Aggregate', 'Remember', 'Forget', 'ಠ_ಠ', '<i class="glyphicon glyphicon-eye-open"></i>',
+  '<i class="glyphicon glyphicon-thumbs-down"></i>'
+  ];
+  var header = $('.home h1 strong');
+  var TICK = 6e3;
+  var _timer;
+
+  $('h1')
+    .on('mouseover', function() {
+      if (_timer) {
+        clearTimeout(_timer);
+      }
+      TICK = 100;
+      _timer = setTimeout(update, TICK);
+    }).on('mouseout', function() {
+      if (_timer) {
+        clearTimeout(_timer);
+      }
+      TICK = 6e3;
+      _timer = setTimeout(update, TICK);
+    })
+
+  function update() {
+    var current = header.html();
+    var index = _.random(messages.length - 1);
+    header.html(_.without(messages, current)[index]);
+    _timer = setTimeout(update, TICK);
+  }
+
+  _timer = setTimeout(update, TICK);
+});
+</script>
+{% endblock %}
+
