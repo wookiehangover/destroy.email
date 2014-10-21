@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container">
   <div class="inbox">
+    <h1>{{ username }}@destroy.email</h1>
     {% for msg in inbox %}
     <article class="message col-xs-12 col-md-8 col-md-offset-2 msg-{{msg.id}}">
       <h3>{{ msg.subject }}</h3>

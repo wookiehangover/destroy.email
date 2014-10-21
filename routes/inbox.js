@@ -39,7 +39,7 @@ exports.inbox = {
           };
 
           var uri = url.parse(src);
-          var protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+          var protocol = process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
           if (uri.protocol !== protocol) {
             attrs.src = '/inbox/proxy?uri=' + safe.toString('base64');
           }

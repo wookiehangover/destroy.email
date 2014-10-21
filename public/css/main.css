@@ -6384,5 +6384,18 @@ button.close {
   padding: 0px;
   overflow: hidden;
 }
+.inbox > h1 {
+  text-align: center;
+  color: #4de2ed;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  font-size: 3em;
+}
+@media (min-width: 1200px) {
+  .inbox > h1 {
+    font-size: 4.5em;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
