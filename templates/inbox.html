@@ -9,7 +9,7 @@
     {% for msg in inbox %}
     <article class="message col-xs-12 col-md-8 col-md-offset-2 msg-{{msg.id}}">
       <h3>{{ msg.subject }}</h3>
-      <p><i>{{ msg.from|first.address }}</i></p>
+      <p><i>{{ msg.from|first.address }}</i> &ndash; <span class="timestamp">{{ msg.createdAt.toString() }}</span></p>
       <div class="well">
         <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
@@ -25,6 +25,7 @@
 
 {% block endscripts %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
 <script>
 jQuery(function($){
   window.addEventListener('message', function(e) {
@@ -47,6 +48,11 @@ jQuery(function($){
     })
     return false;
   });
+
+  $('.timestamp').each(function() {
+    var timestamp = $(this).text();
+    $(this).text(moment(timestamp).fromNow());
+  })
 });
 </script>
 {% endblock %}
