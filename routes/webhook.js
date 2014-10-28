@@ -16,26 +16,22 @@ exports.register = function(plugin, options, next) {
     method: 'POST',
     path: '/webhook',
     handler: function(request, reply) {
-      if (request.payload.mailinMsg) {
-        var json = request.payload.mailinMsg;
-        if (typeof json === 'string') {
-          json = parse(json);
-        }
-        var message = new Message(json);
-
-        return message.saveAll()
-          .then(function() {
-            console.log('Message saved');
-          })
-          .catch(function(err) {
-            console.error(err);
-          })
-          .finally(function() {
-            reply('Message saved');
-          });
+      var json = request.payload;
+      if (typeof json === 'string') {
+        json = parse(json);
       }
+      var message = new Message(json);
 
-      reply();
+      return message.saveAll()
+        .then(function() {
+          console.log('Message saved');
+        })
+        .catch(function(err) {
+          console.error(err);
+        })
+        .finally(function() {
+          reply('Message saved');
+        });
     }
   });
 
