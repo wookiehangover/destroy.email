@@ -73,8 +73,8 @@ exports.inbox = {
       });
     })
     .catch(function(error) {
-      console.log(error)
-      reply(500);
+      console.log(error.stack)
+      reply(error);
     });
 
   },
