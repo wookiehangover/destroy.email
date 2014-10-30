@@ -11,7 +11,7 @@
       <h3>{{ msg.subject }}</h3>
       <p><i>{{ msg.from|first.address }}</i> &ndash; <span class="timestamp">{{ msg.createdAt.toString() }}</span></p>
       <div class="well">
-        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
+        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html || msg.text }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
       <div class="actions">
         <button class="btn btn-default btn-lg" data-archive="{{ msg.id }}">Destroy</button>
