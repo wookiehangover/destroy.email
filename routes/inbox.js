@@ -24,7 +24,13 @@ exports.inbox = {
 
     authenticate(request).then(function(inbox) {
       var parsedInbox = _.map(inbox, function(msg) {
-        var $ = cheerio.load(msg.html);
+        var $;
+        try {
+          $ = cheerio.load(msg.html);
+        } catch (e) {
+          return;
+        }
+
         $('script').remove();
 
         $('a').attr({

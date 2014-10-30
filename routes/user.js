@@ -4,9 +4,24 @@ exports.root = {
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      return reply.redirect('/inbox');
+    }
+
     reply.view('home', {
       title: 'Destroy.EMAIL | Eliminate your inbox'
     });
+  },
+  config: {
+    auth: {
+      mode: 'try',
+      strategy: 'session',
+    },
+    plugins: {
+      'hapi-auth-cookie': {
+        redirectTo: false
+      }
+    }
   }
 };
 
