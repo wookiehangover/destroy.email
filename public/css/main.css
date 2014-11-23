@@ -6319,6 +6319,11 @@ body {
   -o-transition: all 200ms easeIn;
   transition: all 200ms easeIn;
 }
+.big-ass-form input.form-control.full {
+  max-width: 100%;
+  width: 100%;
+  text-align: left;
+}
 .big-ass-form input.form-control.has-success {
   color: #13b5c1;
 }

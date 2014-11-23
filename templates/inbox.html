@@ -10,9 +10,13 @@
     <article class="message col-xs-12 col-md-8 col-md-offset-2 msg-{{msg.id}}">
       <h3>{{ msg.subject }}</h3>
       <p><i>{{ msg.from|first.address }}</i> &ndash; <span class="timestamp">{{ msg.createdAt.toString() }}</span></p>
+      {% if msg.html %}
       <div class="well">
-        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html || msg.text }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
+        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
+      {% else %}
+      <pre><code>{{ msg.text }}</code></pre>
+      {% endif %}
       <div class="actions">
         <button class="btn btn-default btn-lg" data-archive="{{ msg.id }}">Destroy</button>
       </div>

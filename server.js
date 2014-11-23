@@ -23,22 +23,25 @@ server.pack.register([
     options: config.assets
   },
   {
-    plugin: require('./routes/user')
+    plugin: require('./plugins/user')
   },
   {
-    plugin: require('./routes/inbox')
+    plugin: require('./plugins/beta')
   },
   {
-    plugin: require('./routes/webhook')
+    plugin: require('./plugins/inbox')
   },
   {
-    plugin: require('./routes/gmail')
+    plugin: require('./plugins/webhook')
+  },
+  {
+    plugin: require('./plugins/gmail')
   }
 ], function(err) {
   if (err) throw err;
 });
 
-server.pack.register(require('./routes/api'), {
+server.pack.register(require('./plugins/api'), {
   route: {
     prefix: '/api'
   }

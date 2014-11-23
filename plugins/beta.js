@@ -1,45 +1,5 @@
 var beta = require('../lib/beta');
 
-exports.root = {
-  method: 'GET',
-  path: '/',
-  handler: function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      return reply.redirect('/inbox');
-    }
-
-    reply.view('home', {
-      title: 'Destroy.EMAIL | Eliminate your inbox'
-    });
-  },
-  config: {
-    auth: {
-      mode: 'try',
-      strategy: 'session',
-    },
-    plugins: {
-      'hapi-auth-cookie': {
-        redirectTo: false
-      }
-    }
-  }
-};
-
-exports.home = {
-  method: 'GET',
-  path: '/home',
-  handler: function(request, reply) {
-    reply({
-      name: request.auth.credentials.username + '@destroy.email',
-      inbox: 'https://destroy.email/inbox',
-      redirects: []
-    });
-  },
-  config: {
-    auth: 'session'
-  }
-};
-
 exports.beta = {
   method: 'GET',
   path: '/beta',
@@ -65,7 +25,7 @@ exports.redeem = {
   }
 };
 
-exports.betaCreate = {
+exports.createInvite = {
   method: 'POST',
   path: '/beta',
   handler: function(request, reply) {
@@ -82,19 +42,29 @@ exports.betaCreate = {
   }
 };
 
+exports.createAccount = {
+  method: 'POST',
+  path: '/beta/redeem',
+  handler: function(request, reply) {
+    var token = request.payload.token;
+    var username = request.payload.username
+
+
+  }
+};
+
 exports.register = function(plugin, options, next) {
   plugin.route([
-    exports.root,
     exports.redeem,
     exports.beta,
-    exports.betaCreate,
-    exports.home
+    exports.createInvite,
+    exports.createAccount
   ]);
 
   next();
 };
 
 exports.register.attributes = {
-  name: 'user',
+  name: 'beta',
   version: '0.0.1'
 };

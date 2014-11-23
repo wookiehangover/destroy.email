@@ -3,6 +3,7 @@ var User = require('../models/user');
 var path = require('path');
 var url = require('url');
 var cheerio = require('cheerio');
+var Joi = require('joi');
 
 var tmpl = require('fs').readFileSync(path.resolve(__dirname + '/../templates/iframeHelper.ejs'));
 var iframeHelper = _.template(tmpl);
@@ -28,7 +29,8 @@ exports.inbox = {
         try {
           $ = cheerio.load(msg.html);
         } catch (e) {
-          return;
+          delete msg.html;
+          return msg;
         }
 
         $('script').remove();
@@ -92,18 +94,20 @@ exports.inbox = {
 exports.proxy = {
   method: 'GET',
   path: '/inbox/proxy',
+  config: {
+    validate: {
+      query: {
+        url: Joi.string().required()
+      }
+    }
+  },
   handler: {
     proxy: {
       rejectUnauthorized: false,
       timeout: 30e3,
       // ttl: 'upstream',
       mapUri: function(request, callback) {
-        var uri = request.query.uri;
-        if (!uri) {
-          return callback(new Error('URI missing'));
-        }
-
-        uri = new Buffer(uri, 'base64').toString('utf8');
+        var uri = new Buffer(request.query.uri, 'base64').toString('utf8');
         callback(null, uri);
       }
     }

@@ -49,7 +49,9 @@ User.define('inbox', function() {
     .filter({ address: email })
     .eqJoin('Message_id', r.table('Message')).zip()
     .filter({ archived: false })
-    .orderBy(r.desc('createdAt')).run();
+    .orderBy(r.desc('createdAt'))
+    .limit(20)
+    .run();
 });
 
 User.defineStatic('createOrUpdate', function(json) {

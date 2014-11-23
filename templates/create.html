@@ -4,12 +4,15 @@
 
 {% block content %}
 <div class="container">
-  <form role="form" id="signup-form" class="big-ass-form">
+  <form role="form" id="signup-form" class="big-ass-form" action="/beta/redeem" method="POST">
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Pick a username..." name="username">
+      <input type="text" class="form-control" placeholder="Pick a username..." name="username" />
       <h1>@destroy.email</h1>
     </div>
-    <button type="button" class="btn btn-primary btn-lg hidden" disabled="disabled">Request an Invite</button>
+    <div class="form-group">
+      <input type="text" class="form-control full" placeholder="Token" name="token" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg hidden" disabled="disabled">Create Account</button>
   </form>
 </div>
 {% endblock %}
