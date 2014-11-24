@@ -14,10 +14,6 @@ exports.inbox = {
   method: 'GET',
   path: '/inbox',
   handler: function(request, reply) {
-    if (!request.auth.isAuthenticated) {
-      return reply(403);
-    }
-
     authenticate(request)
       .then(prepareInbox)
       .then(function(inbox) {
