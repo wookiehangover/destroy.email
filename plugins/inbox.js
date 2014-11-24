@@ -2,8 +2,7 @@ var User = require('../models/user');
 var Joi = require('joi');
 var prepareInbox = require('../lib/prepare-inbox');
 
-function authenticate(request) {
-  var page = request.query.page || 1;
+function authenticate(request, page) {
   return User.get(request.auth.credentials.username).run()
     .then(function(user) {
       return user.inbox(page);
@@ -14,10 +13,14 @@ exports.inbox = {
   method: 'GET',
   path: '/inbox',
   handler: function(request, reply) {
-    authenticate(request)
+    var page = request.query.page;
+    authenticate(request, page)
       .then(prepareInbox)
       .then(function(inbox) {
         inbox.username = request.auth.credentials.username;
+        inbox.page = page;
+        inbox.prevPage = page === 1 ? 'javascript: void(0)' : '?page=' + (page - 1);
+        inbox.nextPage = '?page=' + (page + 1);
         reply.view('inbox', inbox);
       })
       .catch(function(error) {
@@ -26,7 +29,12 @@ exports.inbox = {
       });
   },
   config: {
-    auth: 'session'
+    auth: 'session',
+    validate: {
+      query: {
+        page: Joi.number().default(1)
+      }
+    }
   }
 };
 

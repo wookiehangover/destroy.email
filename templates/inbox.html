@@ -29,6 +29,10 @@
     {% endfor %}
   </div>
 </div>
+<div class="page-controls">
+  <a href="{{ prevPage }}" {% if (page === 1) %}class="disabled"{% endif %}>Previous</a>
+  <a href="{{ nextPage }}">Next</a>
+</div>
 {% endblock %}
 
 

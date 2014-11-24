@@ -6438,6 +6438,30 @@ body {
     font-size: 4.5em;
   }
 }
+.page-controls {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 2em;
+  font-family: 'Vollkorn', serif;
+}
+.page-controls a {
+  color: #222222;
+  text-decoration: none;
+  border-bottom: 1px solid #4de2ed;
+  display: inline-block;
+  margin-right: 1em;
+  -webkit-transition: border 300ms ease-in-out;
+  -o-transition: border 300ms ease-in-out;
+  transition: border 300ms ease-in-out;
+}
+.page-controls a:hover {
+  border-color: #222222;
+}
+.page-controls a.disabled {
+  color: #eeeeee;
+  border-color: #eeeeee;
+}
 .home {
   display: -webkit-box;
   display: -moz-box;

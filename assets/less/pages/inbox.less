@@ -33,7 +33,6 @@
   .opacity(1);
 }
 
-
 .inbox article iframe {
   width: 100%;
   height: auto;
@@ -53,5 +52,31 @@
 
   @media (min-width: @screen-lg-min) {
     font-size: @big-ass-font-lg;
+  }
+}
+
+.page-controls {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 2em;
+  font-family: 'Vollkorn', serif;
+
+  a {
+    color: @gray-darker;
+    text-decoration: none;
+    border-bottom: 1px solid @brand-primary;
+    display: inline-block;
+    margin-right: 1em;
+    .transition(border 300ms ease-in-out);
+
+    &:hover {
+      border-color: @gray-darker;
+    }
+
+    &.disabled {
+      color: @gray-lighter;
+      border-color: @gray-lighter;
+    }
   }
 }
