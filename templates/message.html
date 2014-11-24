@@ -5,17 +5,12 @@
 {% block content %}
 <div class="container">
   <div class="inbox">
-    <h1>{{ username }}@destroy.email</h1>
-    {% for msg in inbox.page %}
     <article class="message col-xs-12 col-md-8 col-md-offset-2 msg-{{msg.id}}">
       <h3>{{ msg.subject }}</h3>
-      <p>
-        <i>{{ msg.from|first.address }}</i> &ndash; <span class="timestamp">{{ msg.createdAt.toString() }}</span>
-        <a class="permalink" href="/inbox/{{ msg.id }}"><span class="glyphicon glyphicon-link"></span></a>
-      </p>
+      <p><i>{{ msg.from|first.address }}</i> &ndash; <span class="timestamp">{{ msg.createdAt.toString() }}</span></p>
       {% if msg.html %}
       <div class="well">
-        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ inbox.iframeHelper({ id: msg.id }) }}"></iframe>
+        <iframe class="msg-{{msg.id}}" seamless srcdoc="{{ msg.html }}{{ iframeHelper({ id: msg.id }) }}"></iframe>
       </div>
       {% else %}
       <pre><code>{{ msg.text }}</code></pre>
@@ -29,12 +24,10 @@
         </button>
       </div>
     </article>
-    {% endfor %}
   </div>
 </div>
 <div class="page-controls">
-  <a href="{% if (page === 1) %}javascript: void(0){% else %}{{ prevPage }}{% endif %}" {% if (page === 1) %}class="disabled"{% endif %}>Previous</a>
-  <a href="{{ nextPage }}">Next</a>
+  <a href="/inbox">Back</a>
 </div>
 {% endblock %}
 

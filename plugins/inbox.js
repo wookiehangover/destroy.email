@@ -2,39 +2,82 @@ var User = require('../models/user');
 var Joi = require('joi');
 var prepareInbox = require('../lib/prepare-inbox');
 
-function authenticate(request, page) {
-  return User.get(request.auth.credentials.username).run()
-    .then(function(user) {
-      return user.inbox(page);
+function fetchUser(request, reply) {
+  User.get(request.auth.credentials.username).run(function(err, user) {
+    if (err) {
+      throw err;
+    }
+    reply(user);
+  });
+}
+
+function fetchMessage(request, reply) {
+  request.pre.user.getMessage(request.params.id)
+    .then(prepareInbox)
+    .then(reply)
+    .catch(function() {
+      if (err) {
+        throw err;
+      }
+    });
+}
+
+function fetchInboxPage(request, reply) {
+  request.pre.user.inbox(request.query.page)
+    .then(prepareInbox)
+    .then(reply)
+    .catch(function(err) {
+      throw err;
     });
 }
 
 exports.inbox = {
   method: 'GET',
   path: '/inbox',
-  handler: function(request, reply) {
-    var page = request.query.page;
-    authenticate(request, page)
-      .then(prepareInbox)
-      .then(function(inbox) {
-        inbox.username = request.auth.credentials.username;
-        inbox.page = page;
-        inbox.prevPage = page === 1 ? 'javascript: void(0)' : '?page=' + (page - 1);
-        inbox.nextPage = '?page=' + (page + 1);
-        reply.view('inbox', inbox);
-      })
-      .catch(function(error) {
-        console.log(error.stack);
-        reply(error);
-      });
-  },
   config: {
     auth: 'session',
+    pre: [
+      { method: fetchUser, assign: 'user' },
+      { method: fetchInboxPage, assign: 'inbox' }
+    ],
     validate: {
       query: {
         page: Joi.number().default(1)
       }
     }
+  },
+  handler: function(request, reply) {
+    var page = request.query.page;
+    var params = {
+      page: page,
+      inbox: request.pre.inbox,
+      title: 'Inbox',
+      username: request.auth.credentials.username,
+      nextPage: '?page=' + (page + 1),
+      prevPage: '?page=' + (page - 1)
+    };
+    reply.view('inbox', params);
+  }
+};
+
+exports.showMessage = {
+  method: 'GET',
+  path: '/inbox/{id}',
+  config: {
+    auth: 'session',
+    pre: [
+      { method: fetchUser, assign: 'user' },
+      { method: fetchMessage, assign: 'message' }
+    ]
+  },
+  handler: function(request, reply) {
+    var msg = request.pre.message.page[0];
+    var params = {
+      msg: msg,
+      title: msg.subject,
+      iframeHelper: request.pre.message.iframeHelper
+    };
+    reply.view('message', params);
   }
 };
 
@@ -59,10 +102,11 @@ exports.proxy = {
       }
     }
   }
-}
+};
 
 exports.register = function(plugin, options, next) {
   plugin.route([
+    exports.showMessage,
     exports.inbox,
     exports.proxy
   ]);
