@@ -43,14 +43,17 @@ User.defineStatic('authenticate', function(username, password) {
   });
 });
 
-User.define('inbox', function() {
+User.define('inbox', function(page) {
   var email = this.username + '@destroy.email';
+  var perPage = 20;
+  var start = (page * perPage) - perPage;
   return r.table('Message_Receiver').eqJoin('Receiver_id', r.table('Receiver')).zip()
     .filter({ address: email })
     .eqJoin('Message_id', r.table('Message')).zip()
     .filter({ archived: false })
     .orderBy(r.desc('createdAt'))
-    .limit(20)
+    .skip(start)
+    .limit(perPage)
     .run();
 });
 

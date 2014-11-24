@@ -27,7 +27,9 @@ gulp.task('watch', function() {
   child.stdout.pipe(process.stdout);
   child.stderr.pipe(process.stderr);
   process.on('exit', function(code) {
-    child.exit(code);
+    if (child.exit) {
+      child.exit(code);
+    }
   });
   child.on('exit', function(code) {
     process.exit(code);

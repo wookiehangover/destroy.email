@@ -17,8 +17,13 @@
       {% else %}
       <pre><code>{{ msg.text }}</code></pre>
       {% endif %}
-      <div class="actions">
-        <button class="btn btn-default btn-lg" data-archive="{{ msg.id }}">Destroy</button>
+      <div class="actions col-sm-3">
+        <button type="button" class="btn btn-default" data-archive="{{ msg.id }}">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+        <button type="button" class="btn btn-default" data-favorite="{{ msg.id }}">
+          <span class="glyphicon glyphicon-star"></span>
+        </button>
       </div>
     </article>
     {% endfor %}
@@ -30,33 +35,6 @@
 {% block endscripts %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
-<script>
-jQuery(function($){
-  window.addEventListener('message', function(e) {
-    var parts = e.data.split('|');
-    var id = 'iframe.msg-' + parts[0];
-    var height = parts[1];
-    $(id).height(parseInt(height, 10) + 50);
-  }, false);
-
-  $('.inbox article iframe').each(function() {
-    this.contentWindow.postMessage('height', location.origin);
-  });
-
-  $('button[data-archive]').click(function(e) {
-    var id = $(this).data('archive');
-    var elem = 'article.msg-'+ id;
-
-    $.post('/api/messages/'+ id +'/archive').then(function() {
-      $(elem).remove();
-    })
-    return false;
-  });
-
-  $('.timestamp').each(function() {
-    var timestamp = $(this).text();
-    $(this).text(moment(timestamp).fromNow());
-  })
-});
-</script>
+<script src="/js/stickyfloat.js"></script>
+<script src="/js/inbox.js"></script>
 {% endblock %}
