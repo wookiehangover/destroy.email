@@ -1,103 +1,78 @@
 var _ = require('lodash');
+var Joi = require('joi');
 var User = require('../models/user');
+var Message = require('../models/message');
+var prepareMessage = require('../lib/prepare-message');
+
+function fetchInbox(request) {
+  return User.get(request.auth.credentials.username).run()
+    .then(function(user) {
+      return user.inbox();
+    });
+}
+
+function fetchMessage(request) {
+  return Message.get(request.params.id).getJoin().run()
+    .then(prepareMessage);
+}
 
 exports.inbox = {
   method: 'GET',
-  path: '/inbox',
-  handler: function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      User.get(request.auth.credentials.username).run()
-        .then(function(user) {
-          return user.inbox();
-        })
-        .then(function(inbox) {
-          reply(inbox);
-        })
-        .catch(function(error) {
-          console.log(error);
-          reply(500);
-        });
-    } else {
-      reply(403);
-    }
-  },
+  path: '/api/inbox',
   config: {
-    auth: 'session'
-  }
+    auth: 'session',
+    pre: [
+      { method: fetchInbox, assign: 'inbox' }
+    ]
+  },
+  handler: function(request, reply) {
+    reply(request.pre.inbox);
+  },
 };
-
-var Message = require('../models/message');
-var async = require('async');
-var opengrapher = require('opengrapher');
-var cheerio = require('cheerio');
 
 exports.message = {
   archive: {
     method: 'POST',
-    path: '/messages/{id}/archive',
-    handler: function(request, reply) {
-      if (!request.params.id) {
-        return reply(412);
+    path: '/api/messages/{id}/archive',
+    config: {
+      auth: 'session',
+      pre: [
+        { method: fetchMessage, assign: 'message' }
+      ],
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
       }
-      Message.get(request.params.id).run()
-        .then(function(message) {
-          message.archived = true;
-          return message.save();
-        })
-        .then(function() {
-          return reply(200);
-        });
+    },
+    handler: function(request, reply) {
+      var message = request.pre.message;
+      message.archived = true;
+      message.save(function(err) {
+        if(err) {
+          throw err;
+        }
+        return reply(200);
+      });
     }
   },
+
   show: {
     method: 'GET',
-    path: '/messages/{id}',
-    handler: function(request, reply) {
-      if (!request.params.id) {
-        return reply(412);
-      }
-
-      Message.get(request.params.id).getJoin().run(function(err, message) {
-        if (err) throw err;
-
-        var $ = cheerio.load(message.html);
-        var links = [];
-        var unsubscribe = [];
-
-        $('a').each(function() {
-          var href = $(this).attr('href');
-          var text = $(this).text();
-          if (/http/.test(href)) {
-            if (/unsubscribe/.test(text)) {
-              unsubscribe.push(href);
-            } else {
-              links.push(href);
-            }
-          }
-        });
-
-        if (links.length > 0) {
-          message.links = _.unique(links);
-        }
-
-        if (unsubscribe.length > 0) {
-          message.unsubscribe = _.unique(unsubscribe);
-        }
-
-        if (request.query.opengraph) {
-          async.map(links, opengrapher.parse, function(err, opengraph) {
-            if (opengraph) {
-              message.opengraph = opengraph;
-            }
-            reply(message);
-          });
-        } else {
-          reply(message);
-        }
-      });
-    },
+    path: '/api/messages/{id}',
     config: {
-      auth: 'session'
+      auth: 'session',
+      pre: [
+        { method: fetchMessage, assign: 'message' }
+      ],
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
+      }
+    },
+    handler: function(request, reply) {
+      reply(request.pre.message);
     }
   }
 };

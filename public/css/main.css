@@ -6447,8 +6447,12 @@ body {
 .page-controls {
   position: fixed;
   left: 0;
+  right: 0;
   bottom: 0;
-  padding: 2em;
+  height: 3em;
+  padding: 1em;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
   font-family: 'Vollkorn', serif;
 }
 .page-controls a {

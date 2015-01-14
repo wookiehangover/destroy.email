@@ -25,7 +25,7 @@
           <span class="glyphicon glyphicon-trash"></span>
         </button>
         <button type="button" class="btn btn-default" data-favorite="{{ msg.id }}">
-          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-heart"></span>
         </button>
       </div>
     </article>
@@ -33,8 +33,8 @@
   </div>
 </div>
 <div class="page-controls">
-  <a href="{% if (page === 1) %}javascript: void(0){% else %}{{ prevPage }}{% endif %}" {% if (page === 1) %}class="disabled"{% endif %}>Previous</a>
-  <a href="{{ nextPage }}">Next</a>
+  <a href="{% if (page === 1) %}javascript: void(0){% else %}{{ prevPage }}{% endif %}" {% if (page === 1) %}class="disabled"{% endif %}>&laquo; Previous</a>
+  <a href="{{ nextPage }}">Next &raquo;</a>
 </div>
 {% endblock %}
 

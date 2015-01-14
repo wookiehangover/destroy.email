@@ -6,7 +6,7 @@ var csso = require('gulp-csso');
 var rename = require('gulp-rename');
 
 gulp.task('less', function() {
-  gulp.src('assets/less/main.less')
+  return gulp.src('assets/less/main.less')
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(sourcemaps.write('.'))
@@ -14,7 +14,7 @@ gulp.task('less', function() {
 });
 
 gulp.task('cssmin', function() {
-  gulp.src('public/css/main.css')
+  return gulp.src('public/css/main.css')
     .pipe(csso())
     .pipe(rename({
       suffix: '.min'

@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var config = require('config');
 var thinky = require('thinky')(config.rethinkdb);
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var Promise = require('bluebird');
 var compare = Promise.promisify(bcrypt.compare);
 var r = thinky.r;
@@ -15,7 +15,7 @@ var User = thinky.createModel('User', {
   pk: 'username'
 });
 
-User.pre('save', true, function(next) {
+User.pre('save', function(next) {
   var self = this;
   if (this.password.length > 0) {
     bcrypt.genSalt(10, function(err, salt) {

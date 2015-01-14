@@ -1,68 +1,67 @@
 var config = require('config');
 var Hapi = require('hapi');
 var path = require('path');
-var server = new Hapi.Server(process.env.PORT || 3000);
+var server = new Hapi.Server();
+
+server.connection({ port: process.env.PORT || 3000 });
 
 server.views({
   engines: {
     html: require('swig')
   },
-  path: path.join(__dirname, 'templates')
+  path: path.join(__dirname, 'templates'),
+  isCached: process.env === 'production',
+  compileOptions: {
+    isPretty: true
+  }
 });
-
-// Session and Auth Decorators
-require('./lib/session')(server);
 
 // Plugins
-server.pack.register([
+var plugins = [
+  // require('tv'),
   {
-    plugin: require('good'),
+    register: require('good'),
+    options: {
+      opsInterval: 1000,
+      reporters: [{
+        reporter: require('good-console'),
+        args:[{ log: '*', request: '*' }]
+      }]
+    }
   },
   {
-    plugin: require('hapi-assets'),
+    register: require('hapi-assets'),
     options: config.assets
   },
-  {
-    plugin: require('./plugins/user')
-  },
-  {
-    plugin: require('./plugins/beta')
-  },
-  {
-    plugin: require('./plugins/inbox')
-  },
-  {
-    plugin: require('./plugins/webhook')
-  },
-  {
-    plugin: require('./plugins/gmail')
-  }
-], function(err) {
+  require('./lib/session'),
+  require('./lib/auth'),
+  require('./plugins/user'),
+  require('./plugins/beta'),
+  require('./plugins/inbox'),
+  require('./plugins/webhook'),
+  require('./plugins/gmail'),
+  require('./plugins/api')
+];
+
+server.register(plugins, function(err) {
   if (err) throw err;
-});
 
-server.pack.register(require('./plugins/api'), {
-  route: {
-    prefix: '/api'
-  }
-}, function() {});
-
-server.route([
-  // Static assets
-  {
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        path: 'public',
-        listing: true
+  server.route([
+    // Static assets
+    {
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: 'public'
+        }
       }
     }
-  }
-]);
+  ]);
 
-
-server.start(function() {
-  console.log('Server started at:', server.info.uri);
+  server.start(function() {
+    console.log('Server started at:', server.info.uri);
+  });
 });
+
 
